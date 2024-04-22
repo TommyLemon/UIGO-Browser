@@ -21,6 +21,10 @@ buildscript {
                 url "https://maven-default.stage.mozaws.net/maven2"
             }
         }
+
+        maven {
+            url "https://jitpack.io"
+        }
     }
 
     dependencies {
@@ -103,6 +107,11 @@ allprojects {
                 url "https://maven-default.stage.mozaws.net/maven2"
             }
         }
+
+        maven {
+            url "https://jitpack.io"
+        }
+
     }
 }
 

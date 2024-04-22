@@ -19,8 +19,10 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
-public class FloatBallView extends android.support.v7.widget.AppCompatImageView {
+@SuppressLint("AppCompatCustomView")
+public class FloatBallView extends ImageView {
 
   private View.OnTouchListener extraOnTouchListener;
   public FloatBallView setExtraOnTouchListener(View.OnTouchListener extraOnTouchListener) {

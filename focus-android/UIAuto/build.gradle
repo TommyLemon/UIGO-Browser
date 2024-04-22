@@ -1,15 +1,37 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-android'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0"
+    }
+}
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.0'
+    namespace 'uiauto'
+
+//    compileSdkVersion 29
+//    buildToolsVersion '29.0.0'
+//    defaultConfig {
+//        minSdkVersion 26
+//        targetSdkVersion 29
+//        versionCode 1
+//        versionName "1.0"
+//    }
+
     defaultConfig {
-        minSdkVersion 26
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion config.minSdkVersion
+        compileSdk config.compileSdkVersion
+        targetSdkVersion config.targetSdkVersion
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,17 +43,26 @@ android {
 //        targetCompatibility JavaVersion.VERSION_1_8
 //        sourceCompatibility JavaVersion.VERSION_1_8
 //    }
-    buildToolsVersion '29.0.0'
+}
+
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
-    api 'com.android.support:recyclerview-v7:27.1.1'
-    api 'com.squareup.okhttp:okhttp:2.1.0'
-    api 'com.alibaba:fastjson:1.2.74'
-    api 'com.github.APIJSON:apijson-orm:3.9.0'
-    api 'com.github.yhaolpz:FloatWindow:1.0.9'
-    api 'org.jsoup:jsoup:1.7.2'
-//    api 'com.github.TommyLemon:UnitAuto:2.7.2'
-    api project(':UnitAuto-Apk')
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation ComponentsDependencies.androidx_recyclerview
+    implementation ComponentsDependencies.androidx_appcompat // api 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.squareup.okhttp:okhttp:2.1.0'
+    implementation 'com.alibaba:fastjson:1.2.74'
+    implementation 'com.github.APIJSON:apijson-orm:3.9.0'
+    implementation 'com.github.yhaolpz:FloatWindow:1.0.9'
+    implementation 'org.jsoup:jsoup:1.7.2'
+//    implementation 'com.github.TommyLemon:UnitAuto:2.7.2'
+    implementation project(':UnitAuto-Apk')
 }

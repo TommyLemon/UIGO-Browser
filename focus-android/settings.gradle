@@ -20,6 +20,8 @@ plugins {
 apply from: file('../shared-settings.gradle')
 
 include ':app'
+include ':UIAuto'
+include ':UnitAuto-Apk'
 
 gradle.projectsLoaded { ->
     // Disables A-C tests and lint when building Focus.
@@ -121,5 +123,3 @@ if (localProperties != null) {
         log("Disabled auto-publication of Glean. Enable it by settings '$settingGleanPath' in local.properties")
     }
 }
-//include ':UIAuto'
-//include ':UnitAuto-Apk'

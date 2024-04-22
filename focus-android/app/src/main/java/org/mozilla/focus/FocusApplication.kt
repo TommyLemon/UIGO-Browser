@@ -6,6 +6,7 @@ package org.mozilla.focus
 
 import android.content.Context
 import android.os.Build
+import android.os.Handler
 import android.os.StrictMode
 import android.util.Log.INFO
 import androidx.appcompat.app.AppCompatDelegate
@@ -18,6 +19,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
 import mozilla.components.support.base.facts.register
 import mozilla.components.support.base.log.Log
@@ -96,6 +98,11 @@ open class FocusApplication : LocaleAwareApplication(), Provider, CoroutineScope
                 // Remove stale temporary uploaded files.
                 components.fileUploadsDirCleaner.cleanUploadsDirectory()
             }
+
+            UnitAutoApp.getInstance().initUnitAuto(this)
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                UnitAutoApp.getInstance().prepareRecord()
+            }, 1000)
         }
     }
 

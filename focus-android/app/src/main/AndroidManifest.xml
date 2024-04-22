@@ -161,6 +161,29 @@
             android:taskAffinity=""
             android:theme="@style/Theme.AppCompat.Translucent" />
 
+        <activity
+            android:name="uiauto.UIAutoActivity"
+            android:label="@string/ui"
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Window"
+            />
+        <activity
+            android:name="uiauto.UIAutoListActivity"
+            android:label="@string/ui"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="unitauto.apk.UnitAutoActivity"
+            android:label="@string/unit"
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="userLandscape"
+            />
+
         <provider
             android:authorities="${applicationId}.fileprovider"
             android:name="androidx.core.content.FileProvider"
