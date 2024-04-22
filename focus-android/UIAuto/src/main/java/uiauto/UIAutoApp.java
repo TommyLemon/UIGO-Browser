@@ -6113,6 +6113,10 @@ public class UIAutoApp { // extends Application {
 //              "    document.addEventListener('keypress', onKeyEventCallback);\n" +
               "    var ret = 'document.uiautoEditTextMap = ' + JSON.stringify(document.uiautoEditTextMap);\n" +
               "    ret";
+      if (webView == null) {
+        return;
+      }
+
       webView.evaluateJavascript(script, new ValueCallback<String>() {
         @Override
         public void onReceiveValue(String value) {
