@@ -4,7 +4,6 @@
 
 package mozilla.components.browser.engine.gecko
 
-import android.R
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.net.Uri
@@ -13,6 +12,7 @@ import android.view.WindowManager
 import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
+import com.alibaba.fastjson.JSONObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -71,7 +71,6 @@ import mozilla.components.support.ktx.kotlin.tryGetHostFromUrl
 import mozilla.components.support.utils.DownloadUtils
 import mozilla.components.support.utils.DownloadUtils.RESPONSE_CODE_SUCCESS
 import mozilla.components.support.utils.DownloadUtils.makePdfContentDisposition
-import org.json.JSONObject
 import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.ContentBlocking
 import org.mozilla.geckoview.GeckoResult
@@ -83,6 +82,9 @@ import org.mozilla.geckoview.GeckoSession.Recommendation
 import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.WebRequestError
 import org.mozilla.geckoview.WebResponse
+import uiauto.InputUtil
+import unitauto.StringUtil
+import uiauto.UIAutoApp
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 import org.mozilla.geckoview.TranslationsController.SessionTranslation as GeckoViewTranslateSession
@@ -1353,6 +1355,8 @@ class GeckoEngineSession(
             APP.initWeb(activity, fragment, webView, webUrl)
         }
 
+        var dataReqMap = LinkedHashMap<String, MutableMap<String, MutableList<JSONObject>>>()
+
         override fun onPageStop(session: GeckoSession, success: Boolean) {
             // This log statement is temporary and parsed by FNPRMS for performance measurements. It can be
             // removed once FNPRMS is replaced: https://github.com/mozilla-mobile/android-components/issues/8662
@@ -1372,9 +1376,12 @@ class GeckoEngineSession(
             }
 
             var url = pageLoadingUrl
+            if (StringUtil.isEmpty(url, true)) {
+                return
+            }
 
-            val reqMap: MutableMap<String?, List<JSONObject>> = dataReqMap.get(url)
-            val set: Set<Map.Entry<String?, List<JSONObject?>?>>? =
+            val reqMap: MutableMap<String, MutableList<JSONObject>>? = dataReqMap.get(url)
+            val set: Set<Map.Entry<String, MutableList<JSONObject>>>? =
                 if (reqMap == null || reqMap.isEmpty()) null else reqMap.entries
             if (set == null) { // || set.isEmpty()) {
                 APP.onUIEvent(
@@ -1394,7 +1401,7 @@ class GeckoEngineSession(
 
             for (ety in set) {
                 val key = ety?.key
-                val list: List<JSONObject>? = if (key == null) null else ety.value
+                val list: MutableList<JSONObject>? = if (key == null) null else ety.value
                 var first: JSONObject? = null
                 var url_: String? = null
                 while (list != null && list.isEmpty() == false) {
@@ -1437,7 +1444,7 @@ class GeckoEngineSession(
 //            reqMap = null;
 //        } else {
             for (k in toRemoveList) {
-                reqMap.remove(k)
+                reqMap?.remove(k)
             }
 //        }
 
@@ -1684,7 +1691,7 @@ class GeckoEngineSession(
 
         override fun onFocusRequest(session: GeckoSession) = Unit
 
-        override fun onWebAppManifest(session: GeckoSession, manifest: JSONObject) {
+        override fun onWebAppManifest(session: GeckoSession, manifest: org.json.JSONObject) {
             val parsed = WebAppManifestParser().parse(manifest)
             if (parsed is WebAppManifestParser.Result.Success) {
                 notifyObservers { onWebAppManifestLoaded(parsed.manifest) }

@@ -7,6 +7,7 @@ package org.mozilla.focus
 import android.content.Context
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.util.Log.INFO
 import androidx.appcompat.app.AppCompatDelegate
@@ -39,6 +40,7 @@ import org.mozilla.focus.telemetry.FactsProcessor
 import org.mozilla.focus.telemetry.ProfilerMarkerFactProcessor
 import org.mozilla.focus.utils.AdjustHelper
 import org.mozilla.focus.utils.AppConstants
+import uiauto.UIAutoApp
 import kotlin.coroutines.CoroutineContext
 
 @Suppress("TooManyFunctions")
@@ -99,9 +101,9 @@ open class FocusApplication : LocaleAwareApplication(), Provider, CoroutineScope
                 components.fileUploadsDirCleaner.cleanUploadsDirectory()
             }
 
-            UnitAutoApp.getInstance().initUnitAuto(this)
+            UIAutoApp.getInstance().initUIAuto(this)
             Handler(Looper.getMainLooper()).postDelayed(Runnable {
-                UnitAutoApp.getInstance().prepareRecord()
+                UIAutoApp.getInstance().prepareRecord()
             }, 1000)
         }
     }

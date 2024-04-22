@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation ComponentsDependencies.androidx_appcompat // implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.alibaba:fastjson:1.2.74'
     implementation 'com.koushikdutta.async:androidasync:2.+'

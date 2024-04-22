@@ -62,12 +62,13 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import android.widget.LinearLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -4384,8 +4385,8 @@ public class UIAutoApp { // extends Application {
     if (noCache && lp instanceof ViewGroup.MarginLayoutParams) {
       ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
 
-      if (mlp instanceof LinearLayoutCompat.LayoutParams) {
-        float weight = ((LinearLayoutCompat.LayoutParams) mlp).weight;
+      if (mlp instanceof LinearLayout.LayoutParams) {
+        float weight = ((LinearLayout.LayoutParams) mlp).weight;
         if (weight != 0) {
           propertyMap.put(KEY_WEIGHT, weight);
         }
